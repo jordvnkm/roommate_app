@@ -55,11 +55,16 @@
 	var IndexRoute = reactRouter.IndexRoute;
 	
 	var App = __webpack_require__(227);
+	var Homepage = __webpack_require__(228);
 	
 	var routes = React.createElement(
 	  Router,
 	  { history: hashHistory },
-	  React.createElement(Route, { path: "/", component: App })
+	  React.createElement(
+	    Route,
+	    { path: "/", component: App },
+	    React.createElement(IndexRoute, { component: Homepage })
+	  )
 	);
 	
 	document.addEventListener("DOMContentLoaded", function () {
@@ -26353,12 +26358,92 @@
 	    return React.createElement(
 	      "div",
 	      { id: "app" },
-	      "hi there friend;"
+	      this.props.children
 	    );
 	  }
 	});
 	
 	module.exports = App;
+
+/***/ },
+/* 228 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(1);
+	
+	var Navbar = __webpack_require__(229);
+	
+	var Homepage = React.createClass({
+	  displayName: "Homepage",
+	
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      { className: "homepage" },
+	      React.createElement(Navbar, null)
+	    );
+	  }
+	});
+	
+	module.exports = Homepage;
+
+/***/ },
+/* 229 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(1);
+	
+	var Navbar = React.createClass({
+	  displayName: "Navbar",
+	
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      { className: "navbar" },
+	      React.createElement(
+	        "div",
+	        { className: "navbarContent" },
+	        React.createElement(
+	          "div",
+	          { className: "navButton" },
+	          React.createElement(
+	            "span",
+	            null,
+	            "Housemates"
+	          )
+	        ),
+	        React.createElement(
+	          "div",
+	          { className: "navOptions" },
+	          React.createElement(
+	            "div",
+	            { className: "navButton" },
+	            React.createElement(
+	              "span",
+	              { className: "navText" },
+	              "My Houses"
+	            )
+	          ),
+	          React.createElement(
+	            "div",
+	            { className: "navButton" },
+	            React.createElement(
+	              "span",
+	              null,
+	              "My Profile"
+	            )
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = Navbar;
 
 /***/ }
 /******/ ]);

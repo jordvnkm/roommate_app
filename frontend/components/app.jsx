@@ -5,7 +5,7 @@ const App = React.createClass({
   render: function(){
     return (
       <div id="app">
-        hi there friend;
+        {this.props.children}
       </div>
     )
   }

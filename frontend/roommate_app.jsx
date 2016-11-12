@@ -8,12 +8,12 @@ const IndexRoute = reactRouter.IndexRoute;
 
 
 const App = require("./components/app");
-
+const Homepage = require("./components/homepage")
 
 
 let routes = <Router history={hashHistory}>
   <Route path="/" component={App}>
-
+    <IndexRoute component={Homepage}></IndexRoute>
   </Route>
 </Router>
 

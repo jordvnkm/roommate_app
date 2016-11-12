@@ -1,0 +1,30 @@
+.navbar {
+  background-color: #4186a9;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbarContent {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navOptions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 200px;
+}
+
+.navButton:hover {
+  cursor: pointer;
+}
+
+.navButton {
+  color: white;
+}
