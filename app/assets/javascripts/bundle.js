@@ -26374,15 +26374,36 @@
 	var React = __webpack_require__(1);
 	
 	var Navbar = __webpack_require__(229);
+	var LoginModal = __webpack_require__(230);
 	
 	var Homepage = React.createClass({
 	  displayName: "Homepage",
 	
+	
+	  openLoginModal: function openLoginModal() {
+	    var loginModal = document.getElementById("loginModal");
+	    loginModal.style.display = "block";
+	    window.onclick = function (event) {
+	      if (event.target == loginModal) {
+	        loginModal.style.display = "none";
+	      }
+	    };
+	  },
 	  render: function render() {
 	    return React.createElement(
 	      "div",
 	      { className: "homepage" },
-	      React.createElement(Navbar, null)
+	      React.createElement(Navbar, null),
+	      React.createElement(LoginModal, null),
+	      React.createElement(
+	        "div",
+	        { id: "homepageContent" },
+	        React.createElement(
+	          "span",
+	          { onClick: this.openLoginModal, className: "button" },
+	          "Get Started"
+	        )
+	      )
 	    );
 	  }
 	});
@@ -26444,6 +26465,56 @@
 	});
 	
 	module.exports = Navbar;
+
+/***/ },
+/* 230 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(1);
+	
+	var LoginModal = React.createClass({
+	  displayName: "LoginModal",
+	
+	  getInitialState: function getInitialState() {
+	    return { login: true };
+	  },
+	
+	  // loginOrSignup: function(){
+	  //   if (login){
+	  //
+	  //   }
+	  // },
+	
+	  closeModal: function closeModal() {
+	    var loginModal = document.getElementById("loginModal");
+	    loginModal.style.display = "none";
+	  },
+	
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      { id: "loginModal", className: "modal" },
+	      React.createElement(
+	        "div",
+	        { className: "modalContent" },
+	        React.createElement(
+	          "span",
+	          { onClick: this.closeModal, className: "modalClose" },
+	          "close"
+	        ),
+	        React.createElement(
+	          "p",
+	          null,
+	          " hi there"
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = LoginModal;
 
 /***/ }
 /******/ ]);
