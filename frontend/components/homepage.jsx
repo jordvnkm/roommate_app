@@ -4,21 +4,26 @@ const Navbar = require("./navbar");
 const LoginModal = require("./login_modal");
 
 const Homepage = React.createClass({
+  getInitialState: function(){
+    return {modalOpen: false};
+  },
 
   openLoginModal: function(){
     let loginModal = document.getElementById("loginModal");
-    loginModal.style.display = "block";
+
     window.onclick = function(event) {
       if (event.target == loginModal) {
-          loginModal.style.display = "none";
+          this.setState({modalOpen: false});
       }
-    }
+    }.bind(this);
+    this.setState({modalOpen: true});
   },
+
   render: function(){
     return (
       <div className="homepage">
         <Navbar />
-        <LoginModal/>
+        <LoginModal closeModal={this.closeModal} open={this.state.modalOpen}/>
         <div id="homepageContent">
           <span onClick={this.openLoginModal} className="button">Get Started</span>
 

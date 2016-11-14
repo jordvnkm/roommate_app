@@ -26379,22 +26379,27 @@
 	var Homepage = React.createClass({
 	  displayName: "Homepage",
 	
+	  getInitialState: function getInitialState() {
+	    return { modalOpen: false };
+	  },
 	
 	  openLoginModal: function openLoginModal() {
 	    var loginModal = document.getElementById("loginModal");
-	    loginModal.style.display = "block";
+	
 	    window.onclick = function (event) {
 	      if (event.target == loginModal) {
-	        loginModal.style.display = "none";
+	        this.setState({ modalOpen: false });
 	      }
-	    };
+	    }.bind(this);
+	    this.setState({ modalOpen: true });
 	  },
+	
 	  render: function render() {
 	    return React.createElement(
 	      "div",
 	      { className: "homepage" },
 	      React.createElement(Navbar, null),
-	      React.createElement(LoginModal, null),
+	      React.createElement(LoginModal, { closeModal: this.closeModal, open: this.state.modalOpen }),
 	      React.createElement(
 	        "div",
 	        { id: "homepageContent" },
@@ -26474,6 +26479,9 @@
 	
 	var React = __webpack_require__(1);
 	
+	// const LoginForm = require("./components/login_form");
+	var SignupForm = __webpack_require__(231);
+	
 	var LoginModal = React.createClass({
 	  displayName: "LoginModal",
 	
@@ -26487,9 +26495,38 @@
 	  //   }
 	  // },
 	
+	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	    if (newProps.open == false) {
+	      this.closeModal();
+	    } else {
+	      this.openModal();
+	    }
+	  },
+	
 	  closeModal: function closeModal() {
 	    var loginModal = document.getElementById("loginModal");
 	    loginModal.style.display = "none";
+	  },
+	
+	  modalHeader: function modalHeader() {
+	    if (this.state.login) {
+	      return React.createElement(
+	        "span",
+	        null,
+	        "Login"
+	      );
+	    } else {
+	      return React.createElement(
+	        "span",
+	        null,
+	        "Signup"
+	      );
+	    }
+	  },
+	
+	  openModal: function openModal() {
+	    var loginModal = document.getElementById("loginModal");
+	    loginModal.style.display = "block";
 	  },
 	
 	  render: function render() {
@@ -26500,14 +26537,23 @@
 	        "div",
 	        { className: "modalContent" },
 	        React.createElement(
-	          "span",
-	          { onClick: this.closeModal, className: "modalClose" },
-	          "close"
+	          "div",
+	          { className: "modalHeader" },
+	          React.createElement(
+	            "div",
+	            null,
+	            this.modalHeader(),
+	            React.createElement(
+	              "span",
+	              { onClick: this.props.closeModal, className: "modalClose" },
+	              "\xD7"
+	            )
+	          )
 	        ),
 	        React.createElement(
-	          "p",
-	          null,
-	          " hi there"
+	          "div",
+	          { className: "modalBody" },
+	          React.createElement(SignupForm, { open: this.props.open })
 	        )
 	      )
 	    );
@@ -26515,6 +26561,71 @@
 	});
 	
 	module.exports = LoginModal;
+
+/***/ },
+/* 231 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(1);
+	
+	var SignupForm = React.createClass({
+	  displayName: "SignupForm",
+	
+	  getInitialState: function getInitialState() {
+	    return { username: "", email: "", password: "" };
+	  },
+	
+	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	    if (newProps.open == false) {
+	      this.setState({ username: "", email: "", password: "" });
+	    }
+	  },
+	
+	  usernameChange: function usernameChange(event) {
+	    this.setState({ username: event.target.value });
+	  },
+	
+	  emailChange: function emailChange(event) {
+	    this.setState({ email: event.target.value });
+	  },
+	
+	  passwordChange: function passwordChange(event) {
+	    this.setState({ password: event.target.value });
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      { id: "signupForm" },
+	      React.createElement(
+	        "form",
+	        { onSubmit: this.onSubmit, className: "modalForm" },
+	        React.createElement(
+	          "label",
+	          { htmlFor: "userName" },
+	          "Username"
+	        ),
+	        React.createElement("input", { onChange: this.usernameChange, value: this.state.username, type: "text", id: "userName" }),
+	        React.createElement(
+	          "label",
+	          { htmlFor: "email" },
+	          "Email"
+	        ),
+	        React.createElement("input", { onChange: this.emailChange, value: this.state.email, type: "text", id: "email" }),
+	        React.createElement(
+	          "label",
+	          { htmlFor: "password" },
+	          "Password"
+	        ),
+	        React.createElement("input", { onChange: this.passwordChange, value: this.state.password, type: "text", id: "password" }),
+	        React.createElement("input", { type: "submit", value: "Submit" })
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = SignupForm;
 
 /***/ }
 /******/ ]);

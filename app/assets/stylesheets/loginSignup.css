@@ -1,0 +1,38 @@
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modalForm label {
+  margin-bottom: 10px;
+}
+
+.modalForm input[type=text] {
+  margin-bottom: 15px;
+  width: 70%;
+  transition: width 0.4s ease-in-out;
+  height: 20px;
+  padding: 5px;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.modalForm input[type=text]:focus {
+  width: 100%;
+  outline: none;
+}
+
+.modalForm input[type=submit] {
+  width: 80px;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid grey;
+  background-color: white;
+}
+
+.modalForm input[type=submit]:hover {
+  cursor: pointer;
+  background-color: #e6e6e6;
+}
