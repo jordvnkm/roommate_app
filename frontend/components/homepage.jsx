@@ -19,6 +19,10 @@ const Homepage = React.createClass({
     this.setState({modalOpen: true});
   },
 
+  closeModal: function(){
+    this.setState({modalOpen: false});
+  },
+
   render: function(){
     return (
       <div className="homepage">

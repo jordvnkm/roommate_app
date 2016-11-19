@@ -26394,6 +26394,10 @@
 	    this.setState({ modalOpen: true });
 	  },
 	
+	  closeModal: function closeModal() {
+	    this.setState({ modalOpen: false });
+	  },
+	
 	  render: function render() {
 	    return React.createElement(
 	      "div",
@@ -26436,11 +26440,7 @@
 	        React.createElement(
 	          "div",
 	          { className: "navButton" },
-	          React.createElement(
-	            "span",
-	            null,
-	            "Housemates"
-	          )
+	          React.createElement("img", { id: "navLogo" })
 	        ),
 	        React.createElement(
 	          "div",
@@ -26618,7 +26618,7 @@
 	          { htmlFor: "password" },
 	          "Password"
 	        ),
-	        React.createElement("input", { onChange: this.passwordChange, value: this.state.password, type: "text", id: "password" }),
+	        React.createElement("input", { onChange: this.passwordChange, value: this.state.password, type: "password", id: "password" }),
 	        React.createElement("input", { type: "submit", value: "Submit" })
 	      )
 	    );

@@ -6,7 +6,7 @@ const Navbar = React.createClass({
       <div className="navbar">
         <div className="navbarContent">
           <div className="navButton">
-            <span>Housemates</span>
+            <img id="navLogo"/>
           </div>
 
 

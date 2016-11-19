@@ -36,8 +36,8 @@
 /* Modal Header */
 .modalHeader {
     padding: 10px 16px;
-    background-color: #4186a9;
-    color: white;
+    background-color: white;
+    border-bottom: 1px solid #484848;
 }
 
 .modalHeader div {
@@ -49,6 +49,7 @@
 .modalHeader span {
   font-size: 28px;
   font-weight: bold;
+  color: #484848;
 }
 
 /* Modal Body */

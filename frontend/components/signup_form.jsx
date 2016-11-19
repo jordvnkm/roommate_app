@@ -34,7 +34,7 @@ const SignupForm = React.createClass({
           <input onChange={this.emailChange} value={this.state.email} type="text" id="email"/>
 
           <label htmlFor="password">Password</label>
-          <input onChange={this.passwordChange} value={this.state.password} type="text" id="password"/>
+          <input onChange={this.passwordChange} value={this.state.password} type="password" id="password"/>
 
           <input type="submit" value="Submit"/>
         </form>
