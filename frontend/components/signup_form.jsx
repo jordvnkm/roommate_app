@@ -23,6 +23,11 @@ const SignupForm = React.createClass({
   passwordChange: function(event){
     this.setState({password: event.target.value});
   },
+
+  onSubmit: function(){
+    event.preventDefault();
+    console.log("signup submit");
+  },
   render: function(){
     return (
       <div id="signupForm">

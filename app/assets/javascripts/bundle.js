@@ -26479,7 +26479,7 @@
 	
 	var React = __webpack_require__(1);
 	
-	// const LoginForm = require("./components/login_form");
+	var LoginForm = __webpack_require__(232);
 	var SignupForm = __webpack_require__(231);
 	
 	var LoginModal = React.createClass({
@@ -26489,11 +26489,13 @@
 	    return { login: true };
 	  },
 	
-	  // loginOrSignup: function(){
-	  //   if (login){
-	  //
-	  //   }
-	  // },
+	  loginOrSignup: function loginOrSignup() {
+	    if (this.state.login) {
+	      return React.createElement(LoginForm, { open: this.props.open });
+	    } else {
+	      return React.createElement(SignupForm, { open: this.props.open });
+	    }
+	  },
 	
 	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
 	    if (newProps.open == false) {
@@ -26511,15 +26513,33 @@
 	  modalHeader: function modalHeader() {
 	    if (this.state.login) {
 	      return React.createElement(
-	        "span",
-	        null,
-	        "Login"
+	        "ul",
+	        { id: "headerTabs" },
+	        React.createElement(
+	          "li",
+	          { className: "focusHeaderTab" },
+	          "Log In"
+	        ),
+	        React.createElement(
+	          "li",
+	          { onClick: this.toggleMode, className: "formHeaderTab" },
+	          "Sign Up"
+	        )
 	      );
 	    } else {
 	      return React.createElement(
-	        "span",
-	        null,
-	        "Signup"
+	        "ul",
+	        { id: "headerTabs" },
+	        React.createElement(
+	          "li",
+	          { onClick: this.toggleMode, className: "formHeaderTab" },
+	          "Log In"
+	        ),
+	        React.createElement(
+	          "li",
+	          { className: "focusHeaderTab" },
+	          "Sign Up"
+	        )
 	      );
 	    }
 	  },
@@ -26527,6 +26547,10 @@
 	  openModal: function openModal() {
 	    var loginModal = document.getElementById("loginModal");
 	    loginModal.style.display = "block";
+	  },
+	
+	  toggleMode: function toggleMode() {
+	    this.setState({ login: !this.state.login });
 	  },
 	
 	  render: function render() {
@@ -26553,7 +26577,7 @@
 	        React.createElement(
 	          "div",
 	          { className: "modalBody" },
-	          React.createElement(SignupForm, { open: this.props.open })
+	          this.loginOrSignup()
 	        )
 	      )
 	    );
@@ -26594,6 +26618,11 @@
 	  passwordChange: function passwordChange(event) {
 	    this.setState({ password: event.target.value });
 	  },
+	
+	  onSubmit: function onSubmit() {
+	    event.preventDefault();
+	    console.log("signup submit");
+	  },
 	  render: function render() {
 	    return React.createElement(
 	      "div",
@@ -26626,6 +26655,67 @@
 	});
 	
 	module.exports = SignupForm;
+
+/***/ },
+/* 232 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(1);
+	
+	var LoginForm = React.createClass({
+	  displayName: "LoginForm",
+	
+	  getInitialState: function getInitialState() {
+	    return { email: "", password: "" };
+	  },
+	
+	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	    if (newProps.open == false) {
+	      this.setState({ email: "", password: "" });
+	    }
+	  },
+	
+	  emailChange: function emailChange(event) {
+	    this.setState({ email: event.target.value });
+	  },
+	
+	  passwordChange: function passwordChange(event) {
+	    this.setState({ password: event.target.value });
+	  },
+	
+	  onSubmit: function onSubmit(event) {
+	    event.preventDefault();
+	    console.log("login submit");
+	  },
+	
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      { id: "loginForm" },
+	      React.createElement(
+	        "form",
+	        { onSubmit: this.onSubmit, className: "modalForm" },
+	        React.createElement(
+	          "label",
+	          { htmlFor: "email" },
+	          "Email"
+	        ),
+	        React.createElement("input", { onChange: this.emailChange, value: this.state.email, type: "text", id: "email" }),
+	        React.createElement(
+	          "label",
+	          { htmlFor: "password" },
+	          "Password"
+	        ),
+	        React.createElement("input", { onChange: this.passwordChange, value: this.state.password, type: "password", id: "password" }),
+	        React.createElement("input", { type: "submit", value: "Submit" })
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = LoginForm;
 
 /***/ }
 /******/ ]);

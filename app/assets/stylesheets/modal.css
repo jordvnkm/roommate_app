@@ -20,9 +20,9 @@
 }*/
 
 .modalClose {
-    color: #aaa;
     font-size: 28px;
     font-weight: bold;
+    color: #484848;
 }
 
 .modalClose:hover,
@@ -35,7 +35,6 @@
 
 /* Modal Header */
 .modalHeader {
-    padding: 10px 16px;
     background-color: white;
     border-bottom: 1px solid #484848;
 }
@@ -50,6 +49,7 @@
   font-size: 28px;
   font-weight: bold;
   color: #484848;
+  padding-right: 20px;
 }
 
 /* Modal Body */
@@ -82,4 +82,34 @@
 @keyframes animatetop {
     from {top: -300px; opacity: 0}
     to {top: 0; opacity: 1}
+}
+
+
+#headerTabs {
+  width: 60%;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  padding: 0px;
+  align-items: center;
+  margin: 0px;
+}
+
+
+.formHeaderTab:hover {
+  cursor: pointer;
+}
+
+.formHeaderTab {
+  padding: 10px 20px;
+  width: 300px;
+}
+
+.focusHeaderTab {
+  font-size: 20px;
+  font-weight: bold;
+  background: #484848;
+  padding: 10px 20px;
+  color: white;
+  width: 300px;
 }

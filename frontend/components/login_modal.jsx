@@ -1,6 +1,6 @@
 const React = require("react");
 
-// const LoginForm = require("./components/login_form");
+const LoginForm = require("./login_form");
 const SignupForm = require("./signup_form");
 
 const LoginModal = React.createClass({
@@ -8,11 +8,15 @@ const LoginModal = React.createClass({
     return {login: true};
   },
 
-  // loginOrSignup: function(){
-  //   if (login){
-  //
-  //   }
-  // },
+  loginOrSignup: function(){
+    if (this.state.login){
+      return <LoginForm open={this.props.open}/>;
+    }
+    else {
+      return <SignupForm open={this.props.open}/>;
+    }
+  },
+
 
   componentWillReceiveProps: function(newProps){
     if (newProps.open == false){
@@ -30,16 +34,31 @@ const LoginModal = React.createClass({
 
   modalHeader: function(){
     if (this.state.login){
-      return <span>Login</span>;
+      return (
+        <ul id="headerTabs">
+          <li className="focusHeaderTab">Log In</li>
+          <li onClick={this.toggleMode} className="formHeaderTab">Sign Up</li>
+        </ul>
+      );
     }
     else {
-      return <span>Signup</span>;
+      return (
+        <ul id="headerTabs">
+          <li onClick={this.toggleMode} className="formHeaderTab">Log In</li>
+          <li className="focusHeaderTab" >Sign Up</li>
+        </ul>
+      );
     }
+
   },
 
   openModal: function(){
     let loginModal = document.getElementById("loginModal");
     loginModal.style.display = "block";
+  },
+
+  toggleMode: function(){
+    this.setState({login: !this.state.login});
   },
 
   render: function(){
@@ -54,7 +73,7 @@ const LoginModal = React.createClass({
           </div>
 
           <div className="modalBody">
-            <SignupForm open={this.props.open}/>
+            {this.loginOrSignup()}
           </div>
         </div>
       </div>
