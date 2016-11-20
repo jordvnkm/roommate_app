@@ -8,6 +8,10 @@ const UserActions = {
     UserApiUtil.login(user, UserActions.receiveCurrentUser, UserActions.receiveError);
   },
 
+  logout: function(){
+    UserApiUtil.logout(UserActions.removeCurrentUser, UserActions.receiveError);
+  },
+
   signUp: function(user){
     UserApiUtil.signUp(user, UserActions.receiveCurrentUser, UserActions.receiveError);
   },
@@ -19,7 +23,14 @@ const UserActions = {
     });
   },
 
-  handleError: function(error){
+  removeCurrentUser: function(){
+    AppDispatcher.dispatch({
+      actionType: UserConstants.REMOVE_USER
+    })
+  },
+
+  receive: function(error){
+    console.log(error);
     AppDispatcher.dispatch({
       actionType: ErrorConstants.ERROR,
       errors: error.responseJSON.errors

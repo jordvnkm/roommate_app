@@ -9,15 +9,19 @@ const IndexRoute = reactRouter.IndexRoute;
 
 const App = require("./components/app");
 const Homepage = require("./components/homepage")
-
+const AccountPage = require("./components/account_page");
 
 let routes = <Router history={hashHistory}>
   <Route path="/" component={App}>
     <IndexRoute component={Homepage}></IndexRoute>
+    <Route path='/users/:userId' component={AccountPage}></Route>
   </Route>
 </Router>
 
 
 document.addEventListener("DOMContentLoaded", ()=>{
+  if (window.currentUser){
+    UserActions.receiveCurrentUser(window.currentUser);
+  }
   ReactDom.render(routes, document.getElementById("content"))
 });

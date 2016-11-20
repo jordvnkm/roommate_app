@@ -7,13 +7,17 @@ let UserStore = new Store(AppDispatcher);
 let _currentUser = null;
 
 
-UserStore.__onDispatch(payload){
+UserStore.__onDispatch = function(payload){
   switch (payload.actionType){
     case UserConstants.LOGIN:
       loginUser(payload.user);
       UserStore.__emitChange();
       break;
     case UserConstants.LOGOUT:
+      logoutUser();
+      UserStore.__emitChange();
+      break;
+    case UserConstants.REMOVE_USER:
       logoutUser();
       UserStore.__emitChange();
       break;
@@ -35,3 +39,5 @@ UserStore.currentUser = function(){
   }
   return null;
 }
+
+module.exports = UserStore;
