@@ -10,6 +10,7 @@ const IndexRoute = reactRouter.IndexRoute;
 const App = require("./components/app");
 const Homepage = require("./components/homepage")
 const AccountPage = require("./components/account_page");
+const UserActions = require("./actions/user_actions");
 
 let routes = <Router history={hashHistory}>
   <Route path="/" component={App}>

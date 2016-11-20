@@ -31,7 +31,7 @@ const SignupForm = React.createClass({
     UserActions.signUp({
       username: this.state.username,
       email: this.state.email,
-      password: this.state.pasword
+      password: this.state.password
     });
   },
   render: function(){

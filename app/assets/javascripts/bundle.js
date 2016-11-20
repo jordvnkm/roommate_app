@@ -57,6 +57,7 @@
 	var App = __webpack_require__(227);
 	var Homepage = __webpack_require__(228);
 	var AccountPage = __webpack_require__(254);
+	var UserActions = __webpack_require__(233);
 	
 	var routes = React.createElement(
 	  Router,
@@ -26644,7 +26645,7 @@
 	    UserActions.signUp({
 	      username: this.state.username,
 	      email: this.state.email,
-	      password: this.state.pasword
+	      password: this.state.password
 	    });
 	  },
 	  render: function render() {
@@ -26783,7 +26784,7 @@
 	    });
 	  },
 	
-	  receive: function receive(error) {
+	  receiveError: function receiveError(error) {
 	    console.log(error);
 	    AppDispatcher.dispatch({
 	      actionType: ErrorConstants.ERROR,
@@ -26807,8 +26808,8 @@
 	      url: 'api/session',
 	      type: 'POST',
 	      data: param,
-	      success: function success(user) {
-	        successCB(user);
+	      success: function success(data) {
+	        successCB(data);
 	      },
 	      error: function error(_error) {
 	        errorCB(_error);
@@ -26822,8 +26823,8 @@
 	      url: 'api/users',
 	      type: 'POST',
 	      data: param,
-	      success: function success(user) {
-	        successCB(user);
+	      success: function success(data) {
+	        successCB(data);
 	      },
 	      error: function error(_error2) {
 	        errorCB(_error2);

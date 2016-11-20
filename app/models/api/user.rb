@@ -11,7 +11,7 @@ class Api::User < ActiveRecord::Base
 
     return nil if user.nil?
 
-    if user.is_password(password)
+    if user.is_password?(password)
       return user
     else
       return nil

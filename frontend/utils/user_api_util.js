@@ -7,8 +7,8 @@ const UserApiUtil = {
       url: 'api/session',
       type: 'POST',
       data: param,
-      success: function(user){
-        successCB(user);
+      success: function(data){
+        successCB(data);
       },
       error: function(error){
         errorCB(error);
@@ -22,8 +22,8 @@ const UserApiUtil = {
       url: 'api/users',
       type: 'POST',
       data: param,
-      success: function(user){
-        successCB(user);
+      success: function(data){
+        successCB(data);
       },
       error: function(error){
         errorCB(error);

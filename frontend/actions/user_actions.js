@@ -29,7 +29,7 @@ const UserActions = {
     })
   },
 
-  receive: function(error){
+  receiveError: function(error){
     console.log(error);
     AppDispatcher.dispatch({
       actionType: ErrorConstants.ERROR,
