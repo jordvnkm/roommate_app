@@ -1,5 +1,7 @@
 const React = require("react");
 
+const UserActions = require("../actions/user_actions");
+
 const LoginForm = React.createClass({
   getInitialState: function(){
     return {email: "", password: ""};
@@ -21,7 +23,10 @@ const LoginForm = React.createClass({
 
   onSubmit: function(event){
     event.preventDefault();
-    console.log("login submit");
+    UserActions.login({
+      email: this.state.email,
+      password: this.state.password
+    });
   },
 
   render: function(){

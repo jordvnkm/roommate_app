@@ -1,5 +1,7 @@
 const React = require("react");
 
+const UserActions = require("../actions/user_actions");
+
 
 const SignupForm = React.createClass({
   getInitialState: function(){
@@ -26,7 +28,11 @@ const SignupForm = React.createClass({
 
   onSubmit: function(){
     event.preventDefault();
-    console.log("signup submit");
+    UserActions.signUp({
+      username: this.state.username,
+      email: this.state.email,
+      password: this.state.pasword
+    });
   },
   render: function(){
     return (
