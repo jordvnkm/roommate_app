@@ -11,6 +11,7 @@ UserStore.__onDispatch = function(payload){
   switch (payload.actionType){
     case UserConstants.LOGIN:
       loginUser(payload.user);
+      console.log("store");
       UserStore.__emitChange();
       break;
     case UserConstants.LOGOUT:
@@ -27,6 +28,7 @@ UserStore.__onDispatch = function(payload){
 
 const loginUser = function(user){
   _currentUser = user;
+  // console.log(_currentUser);
 }
 
 const logoutUser = function(){

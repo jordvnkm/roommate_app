@@ -32,7 +32,17 @@ const UserApiUtil = {
   },
 
   logout: function(successCB, errorCB){
-
+    $.ajax({
+      url: 'api/session',
+      type: "DELETE",
+      success: function(data){
+        console.log(data);
+        successCB(data);
+      },
+      error: function(errors){
+        errorCB(errors);
+      }
+    })
   }
 };
 

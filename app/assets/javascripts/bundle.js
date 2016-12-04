@@ -57,7 +57,7 @@
 	var App = __webpack_require__(227);
 	var Homepage = __webpack_require__(228);
 	var AccountPage = __webpack_require__(254);
-	var UserActions = __webpack_require__(233);
+	var UserActions = __webpack_require__(232);
 	
 	var routes = React.createElement(
 	  Router,
@@ -26498,8 +26498,8 @@
 	
 	var React = __webpack_require__(1);
 	
-	var LoginForm = __webpack_require__(232);
-	var SignupForm = __webpack_require__(231);
+	var LoginForm = __webpack_require__(231);
+	var SignupForm = __webpack_require__(239);
 	
 	var LoginModal = React.createClass({
 	  displayName: "LoginModal",
@@ -26613,83 +26613,7 @@
 	
 	var React = __webpack_require__(1);
 	
-	var UserActions = __webpack_require__(233);
-	
-	var SignupForm = React.createClass({
-	  displayName: "SignupForm",
-	
-	  getInitialState: function getInitialState() {
-	    return { username: "", email: "", password: "" };
-	  },
-	
-	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
-	    if (newProps.open == false) {
-	      this.setState({ username: "", email: "", password: "" });
-	    }
-	  },
-	
-	  usernameChange: function usernameChange(event) {
-	    this.setState({ username: event.target.value });
-	  },
-	
-	  emailChange: function emailChange(event) {
-	    this.setState({ email: event.target.value });
-	  },
-	
-	  passwordChange: function passwordChange(event) {
-	    this.setState({ password: event.target.value });
-	  },
-	
-	  onSubmit: function onSubmit() {
-	    event.preventDefault();
-	    UserActions.signUp({
-	      username: this.state.username,
-	      email: this.state.email,
-	      password: this.state.password
-	    });
-	  },
-	  render: function render() {
-	    return React.createElement(
-	      "div",
-	      { id: "signupForm" },
-	      React.createElement(
-	        "form",
-	        { onSubmit: this.onSubmit, className: "modalForm" },
-	        React.createElement(
-	          "label",
-	          { htmlFor: "userName" },
-	          "Username"
-	        ),
-	        React.createElement("input", { onChange: this.usernameChange, value: this.state.username, type: "text", id: "userName" }),
-	        React.createElement(
-	          "label",
-	          { htmlFor: "email" },
-	          "Email"
-	        ),
-	        React.createElement("input", { onChange: this.emailChange, value: this.state.email, type: "text", id: "email" }),
-	        React.createElement(
-	          "label",
-	          { htmlFor: "password" },
-	          "Password"
-	        ),
-	        React.createElement("input", { onChange: this.passwordChange, value: this.state.password, type: "password", id: "password" }),
-	        React.createElement("input", { type: "submit", value: "Submit" })
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = SignupForm;
-
-/***/ },
-/* 232 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var React = __webpack_require__(1);
-	
-	var UserActions = __webpack_require__(233);
+	var UserActions = __webpack_require__(232);
 	
 	var LoginForm = React.createClass({
 	  displayName: "LoginForm",
@@ -26748,15 +26672,15 @@
 	module.exports = LoginForm;
 
 /***/ },
-/* 233 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	var UserApiUtil = __webpack_require__(234);
-	var AppDispatcher = __webpack_require__(236);
-	var UserConstants = __webpack_require__(235);
-	var ErrorConstants = __webpack_require__(239);
+	var UserApiUtil = __webpack_require__(233);
+	var AppDispatcher = __webpack_require__(234);
+	var UserConstants = __webpack_require__(237);
+	var ErrorConstants = __webpack_require__(238);
 	
 	var UserActions = {
 	  login: function login(user) {
@@ -26796,7 +26720,7 @@
 	module.exports = UserActions;
 
 /***/ },
-/* 234 */
+/* 233 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26832,37 +26756,35 @@
 	    });
 	  },
 	
-	  logout: function logout(successCB, errorCB) {}
+	  logout: function logout(successCB, errorCB) {
+	    $.ajax({
+	      url: 'api/session',
+	      type: "DELETE",
+	      success: function success(data) {
+	        console.log(data);
+	        successCB(data);
+	      },
+	      error: function error(errors) {
+	        errorCB(errors);
+	      }
+	    });
+	  }
 	};
 	
 	module.exports = UserApiUtil;
 
 /***/ },
-/* 235 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	var UserConstants = {
-	  LOGIN: "LOGIN",
-	  LOGOUT: "LOGOUT",
-	  REMOVE_USER: "REMOVE_USER"
-	};
-	
-	module.exports = UserConstants;
-
-/***/ },
-/* 236 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	var Dispatcher = __webpack_require__(237).Dispatcher;
+	var Dispatcher = __webpack_require__(235).Dispatcher;
 	
 	module.exports = new Dispatcher();
 
 /***/ },
-/* 237 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26874,11 +26796,11 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Dispatcher = __webpack_require__(238);
+	module.exports.Dispatcher = __webpack_require__(236);
 
 
 /***/ },
-/* 238 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27115,7 +27037,21 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 239 */
+/* 237 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	var UserConstants = {
+	  LOGIN: "LOGIN",
+	  LOGOUT: "LOGOUT",
+	  REMOVE_USER: "REMOVE_USER"
+	};
+	
+	module.exports = UserConstants;
+
+/***/ },
+/* 238 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -27127,14 +27063,90 @@
 	module.exports = ErrorConstants;
 
 /***/ },
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(1);
+	
+	var UserActions = __webpack_require__(232);
+	
+	var SignupForm = React.createClass({
+	  displayName: "SignupForm",
+	
+	  getInitialState: function getInitialState() {
+	    return { username: "", email: "", password: "" };
+	  },
+	
+	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	    if (newProps.open == false) {
+	      this.setState({ username: "", email: "", password: "" });
+	    }
+	  },
+	
+	  usernameChange: function usernameChange(event) {
+	    this.setState({ username: event.target.value });
+	  },
+	
+	  emailChange: function emailChange(event) {
+	    this.setState({ email: event.target.value });
+	  },
+	
+	  passwordChange: function passwordChange(event) {
+	    this.setState({ password: event.target.value });
+	  },
+	
+	  onSubmit: function onSubmit() {
+	    event.preventDefault();
+	    UserActions.signUp({
+	      username: this.state.username,
+	      email: this.state.email,
+	      password: this.state.password
+	    });
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      { id: "signupForm" },
+	      React.createElement(
+	        "form",
+	        { onSubmit: this.onSubmit, className: "modalForm" },
+	        React.createElement(
+	          "label",
+	          { htmlFor: "userName" },
+	          "Username"
+	        ),
+	        React.createElement("input", { onChange: this.usernameChange, value: this.state.username, type: "text", id: "userName" }),
+	        React.createElement(
+	          "label",
+	          { htmlFor: "email" },
+	          "Email"
+	        ),
+	        React.createElement("input", { onChange: this.emailChange, value: this.state.email, type: "text", id: "email" }),
+	        React.createElement(
+	          "label",
+	          { htmlFor: "password" },
+	          "Password"
+	        ),
+	        React.createElement("input", { onChange: this.passwordChange, value: this.state.password, type: "password", id: "password" }),
+	        React.createElement("input", { type: "submit", value: "Submit" })
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = SignupForm;
+
+/***/ },
 /* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	var Store = __webpack_require__(241).Store;
-	var AppDispatcher = __webpack_require__(236);
-	var UserConstants = __webpack_require__(235);
+	var AppDispatcher = __webpack_require__(234);
+	var UserConstants = __webpack_require__(237);
 	
 	var UserStore = new Store(AppDispatcher);
 	
@@ -27144,6 +27156,7 @@
 	  switch (payload.actionType) {
 	    case UserConstants.LOGIN:
 	      loginUser(payload.user);
+	      console.log("store");
 	      UserStore.__emitChange();
 	      break;
 	    case UserConstants.LOGOUT:
@@ -27159,6 +27172,7 @@
 	
 	var loginUser = function loginUser(user) {
 	  _currentUser = user;
+	  // console.log(_currentUser);
 	};
 	
 	var logoutUser = function logoutUser() {
@@ -28490,8 +28504,34 @@
 	
 	var React = __webpack_require__(1);
 	
+	var UserActions = __webpack_require__(232);
+	var UserStore = __webpack_require__(240);
+	var hashHistory = __webpack_require__(172).hashHistory;
+	
 	var AccountPage = React.createClass({
 	  displayName: "AccountPage",
+	
+	  getInitialState: function getInitialState() {
+	    return { currentUser: UserStore.currentUser() };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.userListener = UserStore.addListener(this.userChange);
+	  },
+	
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.userListener.remove();
+	  },
+	
+	  userChange: function userChange() {
+	    if (UserStore.currentUser() == null) {
+	      hashHistory.push("/");
+	    }
+	  },
+	
+	  logout: function logout(event) {
+	    event.preventDefault();
+	    UserActions.logout();
+	  },
 	
 	  render: function render() {
 	    return React.createElement(
@@ -28501,6 +28541,11 @@
 	        "span",
 	        null,
 	        "hi from account page"
+	      ),
+	      React.createElement(
+	        "button",
+	        { onClick: this.logout },
+	        "logout"
 	      )
 	    );
 	  }
