@@ -10,10 +10,10 @@ const LoginModal = React.createClass({
 
   loginOrSignup: function(){
     if (this.state.login){
-      return <LoginForm open={this.props.open}/>;
+      return <LoginForm open={this.props.open} closeModal={this.closeModal}/>;
     }
     else {
-      return <SignupForm open={this.props.open}/>;
+      return <SignupForm open={this.props.open} closeModal={this.closeModal}/>;
     }
   },
 

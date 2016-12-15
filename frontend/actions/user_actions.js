@@ -16,10 +16,10 @@ const UserActions = {
     UserApiUtil.signUp(user, UserActions.receiveCurrentUser, UserActions.receiveError);
   },
 
-  receiveCurrentUser: function(user){
+  receiveCurrentUser: function(data){
     AppDispatcher.dispatch({
       actionType: UserConstants.LOGIN,
-      user: user
+      user: data
     });
   },
 

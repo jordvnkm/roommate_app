@@ -11,10 +11,17 @@ const Homepage = React.createClass({
   },
 
   componentDidMount: function(){
+    this.userListener = UserStore.addListener(this.userChange);
     if (this.state.currentUser){
       hashHistory.push(`/users/${this.state.currentUser.id}`);
     }
-    this.userListener = UserStore.addListener(this.userChange);
+  },
+
+  userChange: function(){
+    let user = UserStore.currentUser();
+    if (user !== null){
+      hashHistory.push(`/users/${user.id}`);
+    }
   },
 
   componentWillUnmount: function(){

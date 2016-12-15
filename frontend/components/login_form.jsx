@@ -21,18 +21,20 @@ const LoginForm = React.createClass({
     this.setState({password: event.target.value});
   },
 
-  onSubmit: function(event){
+  submit: function(event){
     event.preventDefault();
+    event.stopPropagation();
     UserActions.login({
       email: this.state.email,
       password: this.state.password
     });
+    this.props.closeModal();
   },
 
   render: function(){
     return (
       <div id="loginForm">
-        <form onSubmit={this.onSubmit} className="modalForm">
+        <form onSubmit={this.submit} className="modalForm">
           <label htmlFor="email">Email</label>
           <input onChange={this.emailChange} value={this.state.email} type="text" id="email"/>
 

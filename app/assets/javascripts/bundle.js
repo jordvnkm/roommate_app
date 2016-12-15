@@ -26392,10 +26392,17 @@
 	  },
 	
 	  componentDidMount: function componentDidMount() {
+	    this.userListener = UserStore.addListener(this.userChange);
 	    if (this.state.currentUser) {
 	      hashHistory.push("/users/" + this.state.currentUser.id);
 	    }
-	    this.userListener = UserStore.addListener(this.userChange);
+	  },
+	
+	  userChange: function userChange() {
+	    var user = UserStore.currentUser();
+	    if (user !== null) {
+	      hashHistory.push("/users/" + user.id);
+	    }
 	  },
 	
 	  componentWillUnmount: function componentWillUnmount() {
@@ -26510,9 +26517,9 @@
 	
 	  loginOrSignup: function loginOrSignup() {
 	    if (this.state.login) {
-	      return React.createElement(LoginForm, { open: this.props.open });
+	      return React.createElement(LoginForm, { open: this.props.open, closeModal: this.closeModal });
 	    } else {
-	      return React.createElement(SignupForm, { open: this.props.open });
+	      return React.createElement(SignupForm, { open: this.props.open, closeModal: this.closeModal });
 	    }
 	  },
 	
@@ -26636,12 +26643,14 @@
 	    this.setState({ password: event.target.value });
 	  },
 	
-	  onSubmit: function onSubmit(event) {
+	  submit: function submit(event) {
 	    event.preventDefault();
+	    event.stopPropagation();
 	    UserActions.login({
 	      email: this.state.email,
 	      password: this.state.password
 	    });
+	    this.props.closeModal();
 	  },
 	
 	  render: function render() {
@@ -26650,7 +26659,7 @@
 	      { id: "loginForm" },
 	      React.createElement(
 	        "form",
-	        { onSubmit: this.onSubmit, className: "modalForm" },
+	        { onSubmit: this.submit, className: "modalForm" },
 	        React.createElement(
 	          "label",
 	          { htmlFor: "email" },
@@ -26695,10 +26704,10 @@
 	    UserApiUtil.signUp(user, UserActions.receiveCurrentUser, UserActions.receiveError);
 	  },
 	
-	  receiveCurrentUser: function receiveCurrentUser(user) {
+	  receiveCurrentUser: function receiveCurrentUser(data) {
 	    AppDispatcher.dispatch({
 	      actionType: UserConstants.LOGIN,
-	      user: user
+	      user: data
 	    });
 	  },
 	
@@ -27156,7 +27165,7 @@
 	  switch (payload.actionType) {
 	    case UserConstants.LOGIN:
 	      loginUser(payload.user);
-	      console.log("store");
+	      console.log('store');
 	      UserStore.__emitChange();
 	      break;
 	    case UserConstants.LOGOUT:
