@@ -7,7 +7,7 @@ const hashHistory = require("react-router").hashHistory;
 
 const Homepage = React.createClass({
   getInitialState: function(){
-    return {modalOpen: false, currentUser: UserStore.currentUser()};
+    return {login: true , modalOpen: false, currentUser: UserStore.currentUser()};
   },
 
   componentDidMount: function(){
@@ -43,11 +43,37 @@ const Homepage = React.createClass({
     this.setState({modalOpen: false});
   },
 
+  logIn: function(){
+    let loginModal = document.getElementById("loginModal");
+
+    window.onclick = function(event) {
+      if (event.target == loginModal) {
+          this.setState({modalOpen: false});
+      }
+    }.bind(this);
+    this.setState({modalOpen: true, login: true})
+  },
+
+  signUp: function(){
+    let loginModal = document.getElementById("loginModal");
+
+    window.onclick = function(event) {
+      if (event.target == loginModal) {
+          this.setState({modalOpen: false});
+      }
+    }.bind(this);
+    this.setState({modalOpen: true, login: false})
+  },
+
+  toggleMode: function(){
+    this.setState({login: !this.state.login});
+  },
+
   render: function(){
     return (
       <div className="homepage">
-        <Navbar />
-        <LoginModal closeModal={this.closeModal} open={this.state.modalOpen}/>
+        <Navbar logIn={this.logIn} signUp={this.signUp}/>
+        <LoginModal login={this.state.login} toggleMode={this.toggleMode} closeModal={this.closeModal} open={this.state.modalOpen}/>
         <div id="homepageContent">
           <span onClick={this.openLoginModal} className="button">Get Started</span>
 

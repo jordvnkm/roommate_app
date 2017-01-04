@@ -9,7 +9,7 @@ const LoginModal = React.createClass({
   },
 
   loginOrSignup: function(){
-    if (this.state.login){
+    if (this.props.login){
       return <LoginForm open={this.props.open} closeModal={this.closeModal}/>;
     }
     else {
@@ -33,18 +33,18 @@ const LoginModal = React.createClass({
   },
 
   modalHeader: function(){
-    if (this.state.login){
+    if (this.props.login){
       return (
         <ul id="headerTabs">
           <li className="focusHeaderTab">Log In</li>
-          <li onClick={this.toggleMode} className="formHeaderTab">Sign Up</li>
+          <li onClick={this.props.toggleMode} className="formHeaderTab">Sign Up</li>
         </ul>
       );
     }
     else {
       return (
         <ul id="headerTabs">
-          <li onClick={this.toggleMode} className="formHeaderTab">Log In</li>
+          <li onClick={this.props.toggleMode} className="formHeaderTab">Log In</li>
           <li className="focusHeaderTab" >Sign Up</li>
         </ul>
       );
@@ -55,10 +55,6 @@ const LoginModal = React.createClass({
   openModal: function(){
     let loginModal = document.getElementById("loginModal");
     loginModal.style.display = "block";
-  },
-
-  toggleMode: function(){
-    this.setState({login: !this.state.login});
   },
 
   render: function(){

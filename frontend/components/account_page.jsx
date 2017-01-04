@@ -1,5 +1,7 @@
 const React = require("react");
 
+const NavBar = require("./navbar");
+
 const UserActions = require("../actions/user_actions");
 const UserStore = require("../stores/user_store");
 const hashHistory = require("react-router").hashHistory;
@@ -30,6 +32,7 @@ const AccountPage = React.createClass({
   render: function(){
     return (
       <div id="accountPage">
+        <NavBar />
         <span>hi from account page</span>
         <button onClick={this.logout}>logout</button>
       </div>

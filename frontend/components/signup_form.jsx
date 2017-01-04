@@ -33,6 +33,7 @@ const SignupForm = React.createClass({
       email: this.state.email,
       password: this.state.password
     });
+    this.props.closeModal();
   },
   render: function(){
     return (

@@ -26388,7 +26388,7 @@
 	  displayName: "Homepage",
 	
 	  getInitialState: function getInitialState() {
-	    return { modalOpen: false, currentUser: UserStore.currentUser() };
+	    return { login: true, modalOpen: false, currentUser: UserStore.currentUser() };
 	  },
 	
 	  componentDidMount: function componentDidMount() {
@@ -26424,12 +26424,38 @@
 	    this.setState({ modalOpen: false });
 	  },
 	
+	  logIn: function logIn() {
+	    var loginModal = document.getElementById("loginModal");
+	
+	    window.onclick = function (event) {
+	      if (event.target == loginModal) {
+	        this.setState({ modalOpen: false });
+	      }
+	    }.bind(this);
+	    this.setState({ modalOpen: true, login: true });
+	  },
+	
+	  signUp: function signUp() {
+	    var loginModal = document.getElementById("loginModal");
+	
+	    window.onclick = function (event) {
+	      if (event.target == loginModal) {
+	        this.setState({ modalOpen: false });
+	      }
+	    }.bind(this);
+	    this.setState({ modalOpen: true, login: false });
+	  },
+	
+	  toggleMode: function toggleMode() {
+	    this.setState({ login: !this.state.login });
+	  },
+	
 	  render: function render() {
 	    return React.createElement(
 	      "div",
 	      { className: "homepage" },
-	      React.createElement(Navbar, null),
-	      React.createElement(LoginModal, { closeModal: this.closeModal, open: this.state.modalOpen }),
+	      React.createElement(Navbar, { logIn: this.logIn, signUp: this.signUp }),
+	      React.createElement(LoginModal, { login: this.state.login, toggleMode: this.toggleMode, closeModal: this.closeModal, open: this.state.modalOpen }),
 	      React.createElement(
 	        "div",
 	        { id: "homepageContent" },
@@ -26453,8 +26479,90 @@
 	
 	var React = __webpack_require__(1);
 	
+	var UserStore = __webpack_require__(240);
+	var UserActions = __webpack_require__(232);
+	var hashHistory = __webpack_require__(172).hashHistory;
+	
 	var Navbar = React.createClass({
 	  displayName: "Navbar",
+	
+	  getInitialState: function getInitialState() {
+	    return { currentUser: UserStore.currentUser() };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.userListener = UserStore.addListener(this.userChange);
+	  },
+	
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.userListener.remove();
+	  },
+	
+	  userChange: function userChange() {
+	    this.setState({ currentUser: UserStore.currentUser() });
+	  },
+	
+	  logOut: function logOut() {
+	    UserActions.logout();
+	  },
+	
+	  navOptions: function navOptions() {
+	    if (this.state.currentUser == null) {
+	      return React.createElement(
+	        "div",
+	        { className: "navOptions" },
+	        React.createElement(
+	          "div",
+	          { className: "navButton" },
+	          React.createElement(
+	            "span",
+	            { onClick: this.props.logIn, className: "navText" },
+	            "Log In"
+	          )
+	        ),
+	        React.createElement(
+	          "div",
+	          { className: "navButton" },
+	          React.createElement(
+	            "span",
+	            { onClick: this.props.signUp },
+	            "Sign Up"
+	          )
+	        )
+	      );
+	    } else {
+	      return React.createElement(
+	        "div",
+	        { className: "navOptions" },
+	        React.createElement(
+	          "div",
+	          { className: "navButton" },
+	          React.createElement(
+	            "span",
+	            { className: "navText" },
+	            "My Houses"
+	          )
+	        ),
+	        React.createElement(
+	          "div",
+	          { className: "navButton" },
+	          React.createElement(
+	            "span",
+	            null,
+	            "My Profile"
+	          )
+	        ),
+	        React.createElement(
+	          "div",
+	          { className: "navButton" },
+	          React.createElement(
+	            "span",
+	            { onClick: this.logOut, className: "navText" },
+	            "Log Out"
+	          )
+	        )
+	      );
+	    }
+	  },
 	
 	  render: function render() {
 	    return React.createElement(
@@ -26468,28 +26576,7 @@
 	          { className: "navButton" },
 	          React.createElement("img", { id: "navLogo" })
 	        ),
-	        React.createElement(
-	          "div",
-	          { className: "navOptions" },
-	          React.createElement(
-	            "div",
-	            { className: "navButton" },
-	            React.createElement(
-	              "span",
-	              { className: "navText" },
-	              "My Houses"
-	            )
-	          ),
-	          React.createElement(
-	            "div",
-	            { className: "navButton" },
-	            React.createElement(
-	              "span",
-	              null,
-	              "My Profile"
-	            )
-	          )
-	        )
+	        this.navOptions()
 	      )
 	    );
 	  }
@@ -26516,7 +26603,7 @@
 	  },
 	
 	  loginOrSignup: function loginOrSignup() {
-	    if (this.state.login) {
+	    if (this.props.login) {
 	      return React.createElement(LoginForm, { open: this.props.open, closeModal: this.closeModal });
 	    } else {
 	      return React.createElement(SignupForm, { open: this.props.open, closeModal: this.closeModal });
@@ -26537,7 +26624,7 @@
 	  },
 	
 	  modalHeader: function modalHeader() {
-	    if (this.state.login) {
+	    if (this.props.login) {
 	      return React.createElement(
 	        "ul",
 	        { id: "headerTabs" },
@@ -26548,7 +26635,7 @@
 	        ),
 	        React.createElement(
 	          "li",
-	          { onClick: this.toggleMode, className: "formHeaderTab" },
+	          { onClick: this.props.toggleMode, className: "formHeaderTab" },
 	          "Sign Up"
 	        )
 	      );
@@ -26558,7 +26645,7 @@
 	        { id: "headerTabs" },
 	        React.createElement(
 	          "li",
-	          { onClick: this.toggleMode, className: "formHeaderTab" },
+	          { onClick: this.props.toggleMode, className: "formHeaderTab" },
 	          "Log In"
 	        ),
 	        React.createElement(
@@ -26573,10 +26660,6 @@
 	  openModal: function openModal() {
 	    var loginModal = document.getElementById("loginModal");
 	    loginModal.style.display = "block";
-	  },
-	
-	  toggleMode: function toggleMode() {
-	    this.setState({ login: !this.state.login });
 	  },
 	
 	  render: function render() {
@@ -27113,6 +27196,7 @@
 	      email: this.state.email,
 	      password: this.state.password
 	    });
+	    this.props.closeModal();
 	  },
 	  render: function render() {
 	    return React.createElement(
@@ -28513,6 +28597,8 @@
 	
 	var React = __webpack_require__(1);
 	
+	var NavBar = __webpack_require__(229);
+	
 	var UserActions = __webpack_require__(232);
 	var UserStore = __webpack_require__(240);
 	var hashHistory = __webpack_require__(172).hashHistory;
@@ -28546,6 +28632,7 @@
 	    return React.createElement(
 	      "div",
 	      { id: "accountPage" },
+	      React.createElement(NavBar, null),
 	      React.createElement(
 	        "span",
 	        null,
